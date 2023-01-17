@@ -1,0 +1,66 @@
+-- DROP SCHEMA dbo;
+
+CREATE SCHEMA dbo;
+-- SchoolDB.dbo.StaffDB definition
+
+-- Drop table
+
+-- DROP TABLE SchoolDB.dbo.StaffDB;
+
+CREATE TABLE SchoolDB.dbo.StaffDB (
+	[Staff ID] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	[Staff Name] varchar(50) COLLATE Turkish_CI_AS NOT NULL,
+	[Staff Duty] varchar(50) COLLATE Turkish_CI_AS NOT NULL,
+	[Staff Division] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	CONSTRAINT StaffDB_PK PRIMARY KEY ([Staff ID])
+);
+
+
+-- SchoolDB.dbo.StudentDB definition
+
+-- Drop table
+
+-- DROP TABLE SchoolDB.dbo.StudentDB;
+
+CREATE TABLE SchoolDB.dbo.StudentDB (
+	[Student ID] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	[Student Name] varchar(50) COLLATE Turkish_CI_AS NOT NULL,
+	[Date of Birth] date NOT NULL,
+	[Student No] int NOT NULL,
+	[Date of Register] date NOT NULL,
+	Major varchar(50) COLLATE Turkish_CI_AS NOT NULL,
+	CONSTRAINT StudentDB_PK PRIMARY KEY ([Student ID])
+);
+
+
+-- SchoolDB.dbo.LessonDB definition
+
+-- Drop table
+
+-- DROP TABLE SchoolDB.dbo.LessonDB;
+
+CREATE TABLE SchoolDB.dbo.LessonDB (
+	[Lesson ID] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	[Lesson Name] varchar(50) COLLATE Turkish_CI_AS NOT NULL,
+	[Lesson Credit] int NOT NULL,
+	[Assigned Teacher] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	[Color Code] varchar(15) COLLATE Turkish_CI_AS NULL,
+	CONSTRAINT LessonDB_PK PRIMARY KEY ([Lesson ID]),
+	CONSTRAINT LessonDB_FK FOREIGN KEY ([Assigned Teacher]) REFERENCES SchoolDB.dbo.StaffDB([Staff ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+-- SchoolDB.dbo.StudentLessonDB definition
+
+-- Drop table
+
+-- DROP TABLE SchoolDB.dbo.StudentLessonDB;
+
+CREATE TABLE SchoolDB.dbo.StudentLessonDB (
+	[Student and Lesson ID] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	[Student taking the Lesson] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	[Lesson Taken] varchar(15) COLLATE Turkish_CI_AS NOT NULL,
+	CONSTRAINT StudentLessonDB_PK PRIMARY KEY ([Student and Lesson ID]),
+	CONSTRAINT StudentLessonDB_FK FOREIGN KEY ([Student taking the Lesson]) REFERENCES SchoolDB.dbo.StudentDB([Student ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT StudentLessonDB_FK_1 FOREIGN KEY ([Lesson Taken]) REFERENCES SchoolDB.dbo.LessonDB([Lesson ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);

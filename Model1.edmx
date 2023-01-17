@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SchoolDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LessonDB">
+          <Key>
+            <PropertyRef Name="Lesson ID" />
+          </Key>
+          <Property Name="Lesson ID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Lesson Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lesson Credit" Type="int" Nullable="false" />
+          <Property Name="Assigned Teacher" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StaffDB">
+          <Key>
+            <PropertyRef Name="Staff ID" />
+          </Key>
+          <Property Name="Staff ID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Staff Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Staff Duty" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Staff Division" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentDB">
+          <Key>
+            <PropertyRef Name="Student ID" />
+          </Key>
+          <Property Name="Student ID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Student Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date of Birth" Type="date" Nullable="false" />
+          <Property Name="Student No" Type="int" Nullable="false" />
+          <Property Name="Date of Register" Type="date" Nullable="false" />
+          <Property Name="Major" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentLessonDB">
+          <Key>
+            <PropertyRef Name="Student and Lesson ID" />
+          </Key>
+          <Property Name="Student and Lesson ID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Student taking the Lesson" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Lesson Taken" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <Association Name="LessonDB_FK">
+          <End Role="StaffDB" Type="Self.StaffDB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LessonDB" Type="Self.LessonDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffDB">
+              <PropertyRef Name="Staff ID" />
+            </Principal>
+            <Dependent Role="LessonDB">
+              <PropertyRef Name="Assigned Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudentLessonDB_FK">
+          <End Role="StudentDB" Type="Self.StudentDB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StudentLessonDB" Type="Self.StudentLessonDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentDB">
+              <PropertyRef Name="Student ID" />
+            </Principal>
+            <Dependent Role="StudentLessonDB">
+              <PropertyRef Name="Student taking the Lesson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudentLessonDB_FK_1">
+          <End Role="LessonDB" Type="Self.LessonDB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StudentLessonDB" Type="Self.StudentLessonDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonDB">
+              <PropertyRef Name="Lesson ID" />
+            </Principal>
+            <Dependent Role="StudentLessonDB">
+              <PropertyRef Name="Lesson Taken" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDBModelStoreContainer">
+          <EntitySet Name="LessonDB" EntityType="Self.LessonDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffDB" EntityType="Self.StaffDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentDB" EntityType="Self.StudentDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentLessonDB" EntityType="Self.StudentLessonDB" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="LessonDB_FK" Association="Self.LessonDB_FK">
+            <End Role="StaffDB" EntitySet="StaffDB" />
+            <End Role="LessonDB" EntitySet="LessonDB" />
+          </AssociationSet>
+          <AssociationSet Name="StudentLessonDB_FK" Association="Self.StudentLessonDB_FK">
+            <End Role="StudentDB" EntitySet="StudentDB" />
+            <End Role="StudentLessonDB" EntitySet="StudentLessonDB" />
+          </AssociationSet>
+          <AssociationSet Name="StudentLessonDB_FK_1" Association="Self.StudentLessonDB_FK_1">
+            <End Role="LessonDB" EntitySet="LessonDB" />
+            <End Role="StudentLessonDB" EntitySet="StudentLessonDB" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LessonDB">
+          <Key>
+            <PropertyRef Name="Lesson_ID" />
+          </Key>
+          <Property Name="Lesson_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lesson_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lesson_Credit" Type="Int32" Nullable="false" />
+          <Property Name="Assigned_Teacher" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="StaffDB" Relationship="Self.LessonDB_FK" FromRole="LessonDB" ToRole="StaffDB" />
+          <NavigationProperty Name="StudentLessonDBs" Relationship="Self.StudentLessonDB_FK_1" FromRole="LessonDB" ToRole="StudentLessonDB" />
+        </EntityType>
+        <EntityType Name="StaffDB">
+          <Key>
+            <PropertyRef Name="Staff_ID" />
+          </Key>
+          <Property Name="Staff_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Staff_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Staff_Duty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Staff_Division" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LessonDBs" Relationship="Self.LessonDB_FK" FromRole="StaffDB" ToRole="LessonDB" />
+        </EntityType>
+        <EntityType Name="StudentDB">
+          <Key>
+            <PropertyRef Name="Student_ID" />
+          </Key>
+          <Property Name="Student_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Student_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date_of_Birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Student_No" Type="Int32" Nullable="false" />
+          <Property Name="Date_of_Register" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="StudentLessonDBs" Relationship="Self.StudentLessonDB_FK" FromRole="StudentDB" ToRole="StudentLessonDB" />
+        </EntityType>
+        <EntityType Name="StudentLessonDB">
+          <Key>
+            <PropertyRef Name="Student_and_Lesson_ID" />
+          </Key>
+          <Property Name="Student_and_Lesson_ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Student_taking_the_Lesson" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lesson_Taken" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LessonDB" Relationship="Self.StudentLessonDB_FK_1" FromRole="StudentLessonDB" ToRole="LessonDB" />
+          <NavigationProperty Name="StudentDB" Relationship="Self.StudentLessonDB_FK" FromRole="StudentLessonDB" ToRole="StudentDB" />
+        </EntityType>
+        <Association Name="LessonDB_FK">
+          <End Role="StaffDB" Type="Self.StaffDB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LessonDB" Type="Self.LessonDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffDB">
+              <PropertyRef Name="Staff_ID" />
+            </Principal>
+            <Dependent Role="LessonDB">
+              <PropertyRef Name="Assigned_Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudentLessonDB_FK_1">
+          <End Role="LessonDB" Type="Self.LessonDB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StudentLessonDB" Type="Self.StudentLessonDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LessonDB">
+              <PropertyRef Name="Lesson_ID" />
+            </Principal>
+            <Dependent Role="StudentLessonDB">
+              <PropertyRef Name="Lesson_Taken" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudentLessonDB_FK">
+          <End Role="StudentDB" Type="Self.StudentDB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StudentLessonDB" Type="Self.StudentLessonDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentDB">
+              <PropertyRef Name="Student_ID" />
+            </Principal>
+            <Dependent Role="StudentLessonDB">
+              <PropertyRef Name="Student_taking_the_Lesson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LessonDBs" EntityType="Self.LessonDB" />
+          <EntitySet Name="StaffDBs" EntityType="Self.StaffDB" />
+          <EntitySet Name="StudentDBs" EntityType="Self.StudentDB" />
+          <EntitySet Name="StudentLessonDBs" EntityType="Self.StudentLessonDB" />
+          <AssociationSet Name="LessonDB_FK" Association="Self.LessonDB_FK">
+            <End Role="StaffDB" EntitySet="StaffDBs" />
+            <End Role="LessonDB" EntitySet="LessonDBs" />
+          </AssociationSet>
+          <AssociationSet Name="StudentLessonDB_FK_1" Association="Self.StudentLessonDB_FK_1">
+            <End Role="LessonDB" EntitySet="LessonDBs" />
+            <End Role="StudentLessonDB" EntitySet="StudentLessonDBs" />
+          </AssociationSet>
+          <AssociationSet Name="StudentLessonDB_FK" Association="Self.StudentLessonDB_FK">
+            <End Role="StudentDB" EntitySet="StudentDBs" />
+            <End Role="StudentLessonDB" EntitySet="StudentLessonDBs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchoolDBModelStoreContainer" CdmEntityContainer="SDBEntities">
+          <EntitySetMapping Name="LessonDBs">
+            <EntityTypeMapping TypeName="SchoolDBModel.LessonDB">
+              <MappingFragment StoreEntitySet="LessonDB">
+                <ScalarProperty Name="Lesson_ID" ColumnName="Lesson ID" />
+                <ScalarProperty Name="Lesson_Name" ColumnName="Lesson Name" />
+                <ScalarProperty Name="Lesson_Credit" ColumnName="Lesson Credit" />
+                <ScalarProperty Name="Assigned_Teacher" ColumnName="Assigned Teacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffDBs">
+            <EntityTypeMapping TypeName="SchoolDBModel.StaffDB">
+              <MappingFragment StoreEntitySet="StaffDB">
+                <ScalarProperty Name="Staff_ID" ColumnName="Staff ID" />
+                <ScalarProperty Name="Staff_Name" ColumnName="Staff Name" />
+                <ScalarProperty Name="Staff_Duty" ColumnName="Staff Duty" />
+                <ScalarProperty Name="Staff_Division" ColumnName="Staff Division" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentDBs">
+            <EntityTypeMapping TypeName="SchoolDBModel.StudentDB">
+              <MappingFragment StoreEntitySet="StudentDB">
+                <ScalarProperty Name="Student_ID" ColumnName="Student ID" />
+                <ScalarProperty Name="Student_Name" ColumnName="Student Name" />
+                <ScalarProperty Name="Date_of_Birth" ColumnName="Date of Birth" />
+                <ScalarProperty Name="Student_No" ColumnName="Student No" />
+                <ScalarProperty Name="Date_of_Register" ColumnName="Date of Register" />
+                <ScalarProperty Name="Major" ColumnName="Major" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentLessonDBs">
+            <EntityTypeMapping TypeName="SchoolDBModel.StudentLessonDB">
+              <MappingFragment StoreEntitySet="StudentLessonDB">
+                <ScalarProperty Name="Student_and_Lesson_ID" ColumnName="Student and Lesson ID" />
+                <ScalarProperty Name="Student_taking_the_Lesson" ColumnName="Student taking the Lesson" />
+                <ScalarProperty Name="Lesson_Taken" ColumnName="Lesson Taken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
