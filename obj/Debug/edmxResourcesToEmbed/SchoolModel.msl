@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SchoolDBModelStoreContainer" CdmEntityContainer="SchoolDBEntities1">
+    <EntitySetMapping Name="LessonDBs">
+      <EntityTypeMapping TypeName="SchoolDBModel.LessonDB">
+        <MappingFragment StoreEntitySet="LessonDB">
+          <ScalarProperty Name="Lesson_ID" ColumnName="Lesson ID" />
+          <ScalarProperty Name="Lesson_Name" ColumnName="Lesson Name" />
+          <ScalarProperty Name="Lesson_Credit" ColumnName="Lesson Credit" />
+          <ScalarProperty Name="Assigned_Teacher" ColumnName="Assigned Teacher" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffDBs">
+      <EntityTypeMapping TypeName="SchoolDBModel.StaffDB">
+        <MappingFragment StoreEntitySet="StaffDB">
+          <ScalarProperty Name="Staff_ID" ColumnName="Staff ID" />
+          <ScalarProperty Name="Staff_Name" ColumnName="Staff Name" />
+          <ScalarProperty Name="Staff_Duty" ColumnName="Staff Duty" />
+          <ScalarProperty Name="Staff_Division" ColumnName="Staff Division" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentDBs">
+      <EntityTypeMapping TypeName="SchoolDBModel.StudentDB">
+        <MappingFragment StoreEntitySet="StudentDB">
+          <ScalarProperty Name="Student_ID" ColumnName="Student ID" />
+          <ScalarProperty Name="Student_Name" ColumnName="Student Name" />
+          <ScalarProperty Name="Date_of_Birth" ColumnName="Date of Birth" />
+          <ScalarProperty Name="Student_No" ColumnName="Student No" />
+          <ScalarProperty Name="Date_of_Register" ColumnName="Date of Register" />
+          <ScalarProperty Name="Major" ColumnName="Major" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentLessonDBs">
+      <EntityTypeMapping TypeName="SchoolDBModel.StudentLessonDB">
+        <MappingFragment StoreEntitySet="StudentLessonDB">
+          <ScalarProperty Name="Student_and_Lesson_ID" ColumnName="Student and Lesson ID" />
+          <ScalarProperty Name="Student_taking_the_Lesson" ColumnName="Student taking the Lesson" />
+          <ScalarProperty Name="Lesson_Taken" ColumnName="Lesson Taken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

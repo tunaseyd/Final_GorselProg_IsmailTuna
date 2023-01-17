@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SchoolDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="LessonDB">
+    <Key>
+      <PropertyRef Name="Lesson ID" />
+    </Key>
+    <Property Name="Lesson ID" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Lesson Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Lesson Credit" Type="int" Nullable="false" />
+    <Property Name="Assigned Teacher" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StaffDB">
+    <Key>
+      <PropertyRef Name="Staff ID" />
+    </Key>
+    <Property Name="Staff ID" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Staff Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Staff Duty" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Staff Division" Type="varchar" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudentDB">
+    <Key>
+      <PropertyRef Name="Student ID" />
+    </Key>
+    <Property Name="Student ID" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Student Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Date of Birth" Type="date" Nullable="false" />
+    <Property Name="Student No" Type="int" Nullable="false" />
+    <Property Name="Date of Register" Type="date" Nullable="false" />
+    <Property Name="Major" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudentLessonDB">
+    <Key>
+      <PropertyRef Name="Student and Lesson ID" />
+    </Key>
+    <Property Name="Student and Lesson ID" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Student taking the Lesson" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Lesson Taken" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <Association Name="LessonDB_FK">
+    <End Role="StaffDB" Type="Self.StaffDB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LessonDB" Type="Self.LessonDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffDB">
+        <PropertyRef Name="Staff ID" />
+      </Principal>
+      <Dependent Role="LessonDB">
+        <PropertyRef Name="Assigned Teacher" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentLessonDB_FK">
+    <End Role="StudentDB" Type="Self.StudentDB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StudentLessonDB" Type="Self.StudentLessonDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentDB">
+        <PropertyRef Name="Student ID" />
+      </Principal>
+      <Dependent Role="StudentLessonDB">
+        <PropertyRef Name="Student taking the Lesson" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentLessonDB_FK_1">
+    <End Role="LessonDB" Type="Self.LessonDB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StudentLessonDB" Type="Self.StudentLessonDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LessonDB">
+        <PropertyRef Name="Lesson ID" />
+      </Principal>
+      <Dependent Role="StudentLessonDB">
+        <PropertyRef Name="Lesson Taken" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SchoolDBModelStoreContainer">
+    <EntitySet Name="LessonDB" EntityType="Self.LessonDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffDB" EntityType="Self.StaffDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentDB" EntityType="Self.StudentDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentLessonDB" EntityType="Self.StudentLessonDB" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="LessonDB_FK" Association="Self.LessonDB_FK">
+      <End Role="StaffDB" EntitySet="StaffDB" />
+      <End Role="LessonDB" EntitySet="LessonDB" />
+    </AssociationSet>
+    <AssociationSet Name="StudentLessonDB_FK" Association="Self.StudentLessonDB_FK">
+      <End Role="StudentDB" EntitySet="StudentDB" />
+      <End Role="StudentLessonDB" EntitySet="StudentLessonDB" />
+    </AssociationSet>
+    <AssociationSet Name="StudentLessonDB_FK_1" Association="Self.StudentLessonDB_FK_1">
+      <End Role="LessonDB" EntitySet="LessonDB" />
+      <End Role="StudentLessonDB" EntitySet="StudentLessonDB" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
